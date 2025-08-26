@@ -1,6 +1,7 @@
 package com.daniela.agendadortarefas.infrastructure.entity;
 
 import com.daniela.agendadortarefas.infrastructure.enums.StatusNotificacaoEnum;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -20,6 +21,7 @@ public class TarefasEntity {
     private String nomeTarefa;
     private String descricao;
     private LocalDateTime dataCriacao;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
     private LocalDateTime dataEvento;
     private String emailUsuario;
     private LocalDateTime dataAlteracao;

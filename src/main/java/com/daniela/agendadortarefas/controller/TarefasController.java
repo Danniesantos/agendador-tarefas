@@ -19,9 +19,9 @@ public class TarefasController {
     private final TarefasService tarefasService;
 
     @PostMapping
-    public ResponseEntity<TarefasDTO> gravarTarefas(@RequestBody TarefasDTO dto,
+    public ResponseEntity<TarefasDTO> gravarTarefas(@RequestBody TarefasDTO tarefasDTO,
                                                     @RequestHeader("Authorization") String token) {
-        return ResponseEntity.ok(tarefasService.gravarTarefa(token, dto));
+        return ResponseEntity.ok(tarefasService.gravarTarefa(token, tarefasDTO));
     }
 
     @GetMapping("/eventos")
@@ -46,12 +46,12 @@ public class TarefasController {
     public ResponseEntity<TarefasDTO> alteraStatusNotificacao(
             @RequestParam("status") StatusNotificacaoEnum status,
             @RequestParam("id") String id) {
-        return ResponseEntity.ok(tarefasService.alteraStatus(status, id));
+        return ResponseEntity.ok(tarefasService.alteraStatusNotificacao(status, id));
     }
 
     @PutMapping
-    public ResponseEntity<TarefasDTO> updateTarefas(@RequestBody TarefasDTO dto, @RequestParam("id") String id) {
-        return ResponseEntity.ok(tarefasService.updateTarefas(dto, id));
+    public ResponseEntity<TarefasDTO> updateTarefas(@RequestBody TarefasDTO tarefasDTO, @RequestParam("id") String id) {
+        return ResponseEntity.ok(tarefasService.updateTarefas(tarefasDTO, id));
     }
 
 }

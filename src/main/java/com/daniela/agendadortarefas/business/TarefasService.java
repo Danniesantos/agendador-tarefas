@@ -23,12 +23,12 @@ public class TarefasService {
     private final TarefaUpdateConverter tarefaUpdateConverter;
     private final JwtUtil jwtUtil;
 
-    public TarefasDTO gravarTarefa(String token, TarefasDTO dto) {
+    public TarefasDTO gravarTarefa(String token, TarefasDTO tarefasDTO) {
         String email = jwtUtil.extractUsername(token.substring(7));
-        dto.setDataCriacao(LocalDateTime.now());
-        dto.setStatusNotificacaoEnum(StatusNotificacaoEnum.PENDENTE);
-        dto.setEmailUsuario(email);
-        TarefasEntity entity = tarefasConverter.paraTarefaEntity(dto);
+        tarefasDTO.setDataCriacao(LocalDateTime.now());
+        tarefasDTO.setStatusNotificacaoEnum(StatusNotificacaoEnum.PENDENTE);
+        tarefasDTO.setEmailUsuario(email);
+        TarefasEntity entity = tarefasConverter.paraTarefaEntity(tarefasDTO);
         return tarefasConverter.paraTarefaDTO(tarefasRepository.save(entity));
     }
 
@@ -51,7 +51,7 @@ public class TarefasService {
         }
     }
 
-    public TarefasDTO alteraStatus(StatusNotificacaoEnum status, String id) {
+    public TarefasDTO alteraStatusNotificacao(StatusNotificacaoEnum status, String id) {
         try {
             TarefasEntity entity = tarefasRepository.findById(id).orElseThrow(
                     () -> new ResourceNotFoundException("Tarefa não encontrada" + id));
@@ -62,11 +62,11 @@ public class TarefasService {
         }
     }
 
-    public TarefasDTO updateTarefas(TarefasDTO dto, String id) {
+    public TarefasDTO updateTarefas(TarefasDTO tarefasDTO, String id) {
         try {
             TarefasEntity entity = tarefasRepository.findById(id).orElseThrow(
                     () -> new ResourceNotFoundException("Tarefa não encontrada" + id));
-            tarefaUpdateConverter.updateTarefas(dto, entity);
+            tarefaUpdateConverter.updateTarefas(tarefasDTO, entity);
             return tarefasConverter.paraTarefaDTO(tarefasRepository.save(entity));
         } catch (ResourceNotFoundException e) {
             throw new ResourceNotFoundException("Erro ao alterar status da tarefa" + e.getCause());
